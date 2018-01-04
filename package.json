@@ -1,0 +1,25 @@
+{
+  "name": "reqres-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot to notify user about http requests",
+  "main": "app.js",
+  "scripts": {
+    "start": "node always-run.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onlyarte/reqres-bot.git"
+  },
+  "author": "Ruslan Purii",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/onlyarte/reqres-bot/issues"
+  },
+  "homepage": "https://github.com/onlyarte/reqres-bot#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongodb": "^3.0.1",
+    "telegraf": "^3.17.2",
+    "start": "^5.1.0"
+  }
+}
