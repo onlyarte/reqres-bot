@@ -15,5 +15,5 @@ app.get('/api/:key/:target/:message', (req, res) => {
   res.send()
 })
 
-module.exports.startBot = () => bot.startPolling()
-module.exports.startExpress = () => app.listen(process.env.PORT)
+bot.startPolling()
+app.listen((process.env.PORT || 5000))
