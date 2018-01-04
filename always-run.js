@@ -1,4 +1,4 @@
 const app = require('./app')
 
-app.startBot();
-app.startExpress();
+app.startBot()
+app.startExpress()
