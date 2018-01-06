@@ -14,7 +14,7 @@ const get = function findById(id) {
 
     const Client = db.get().collection('client')
 
-    return Client.findOne(
+    Client.findOne(
       {
         _id: new ObjectID(id),
       }, 
@@ -41,8 +41,8 @@ const add = function addNewClient(client) {
 
     const Client = db.get().collection('client')
 
-    return Client.insert(client, (error, res) => {
-      if (eror) reject(error)
+    Client.insert(client, (error, res) => {
+      if (error) reject(error)
       resolve(res.result)
     })
   })
@@ -111,7 +111,26 @@ const reset = function findByIdAndResetMessagesCounter(id) {
   })
 }
 
+const getAll = function find() {
+  return new Promise((resolve, reject) => {
+    if (!db.get()) {
+      reject(new Error('Could not connect to db!'))
+      return
+    }
+
+    const Client = db.get().collection('client')
+
+    return Client.find({}).toArray((error, clients) => {
+      if (error) reject(error)
+      if (!clients) reject(new Error('No clients'))
+      
+      resolve(clients)
+    })
+  })
+}
+
 module.exports.get = get
 module.exports.add = add
 module.exports.incr = incr
 module.exports.reset = reset
+module.exports.getAll = getAll

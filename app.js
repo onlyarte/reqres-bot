@@ -6,7 +6,7 @@ const Telegraf = require('telegraf')
 
 const app = express()
 const { reply } = Telegraf
-const bot = new Telegraf(process.env.tlg_token  || '492544642:AAFcpx9GLdOJvJnHZMAvk-DSdkhn5ANk3N0')
+const bot = new Telegraf(process.env.tlg_token)
 
 // Connect to MongoDB
 db.connect((error) => {
@@ -25,7 +25,7 @@ bot.command('/start', (ctx) => {
 })
 
 // Express: proccess client message request
-app.get('/api/:key/:target/:message', (req, res) => {
+app.get('/message/:key/:target/:message', (req, res) => {
   Client
     .get(req.params.key)
   // If client key is valid send message to user
@@ -33,7 +33,7 @@ app.get('/api/:key/:target/:message', (req, res) => {
       return bot.telegram
         .sendMessage(
           req.params.target, 
-          `${req.params.message} \n from ${client.name}`,
+          `${req.params.message} \n\nFrom ${client.name}`,
         )
     })
   // If message sent increment client message counter
@@ -53,7 +53,7 @@ app.get('/api/:key/:target/:message', (req, res) => {
 })
 
 // Express: proccess client registration
-app.post('/api/client/new', (req, res) => {
+app.post('/client/new', (req, res) => {
   Client
     .add(
       {
@@ -71,6 +71,24 @@ app.post('/api/client/new', (req, res) => {
       res.sendStatus(500)
     })
 })
+
+// Express: show all clients
+app.get('/client/all/:admkey', (req, res) => {
+  if (req.params.admkey !== process.env.adm_key){
+    res.sendStatus(500)
+    return
+  }
+
+  Client
+    .getAll()
+    .then((clients) => {
+      res.send(JSON.stringify(clients))
+    })
+    .catch((error) => {
+      console.log(error)
+      res.sendStatus(500)
+    })
+});
 
 // Express: index page
 app.get('/', (req, res) => {

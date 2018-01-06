@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient
 
 // Connection URL
-const url = process.env.mdb_url || 'mongodb://purii:ruslan16@ds239137.mlab.com:39137/birdsaidbot'
+const url = process.env.mdb_url
 
 // Database Name
 const dbName = 'birdsaidbot'
